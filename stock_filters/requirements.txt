@@ -1,0 +1,8 @@
+pandas>=2.0
+APScheduler>=3.10
+PyYAML>=6.0
+requests>=2.31
+akshare>=1.10
+duckdb>=0.9
+numpy>=1.24
+pytest>=7.0

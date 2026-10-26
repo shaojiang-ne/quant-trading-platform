@@ -1,0 +1,432 @@
+[
+  {
+    "id": "strat-double-ma",
+    "name": "双均线策略",
+    "class_name": "DoubleMaStrategy",
+    "description": "快慢两根均线交叉产生买卖信号，金叉买入、死叉卖出",
+    "category": "趋势跟踪",
+    "parameters": {
+      "fast_window": {
+        "value": 10,
+        "type": "int",
+        "label": "快线周期",
+        "min": 2,
+        "max": 60,
+        "description": "短期移动平均线的天数。周期越短反应越灵敏但假信号越多，周期越长越稳定但反应迟缓。例如：5日快线适合短线交易，10日快线适合波段交易，20日快线适合中长线。常见搭配：快5/慢20（短线）、快10/慢30（波段）、快20/慢60（中长线）"
+      },
+      "slow_window": {
+        "value": 30,
+        "type": "int",
+        "label": "慢线周期",
+        "min": 5,
+        "max": 120,
+        "description": "长期移动平均线的天数。代表中长期趋势方向，慢线周期应明显大于快线。例如：快5配慢20、快10配慢30、快20配慢60。慢线周期越大，信号越少但越可靠"
+      }
+    }
+  },
+  {
+    "id": "strat-macd",
+    "name": "MACD策略",
+    "class_name": "MacdStrategy",
+    "description": "基于MACD指标的金叉死叉和柱状图变化产生交易信号",
+    "category": "趋势跟踪",
+    "parameters": {
+      "fast_period": {
+        "value": 12,
+        "type": "int",
+        "label": "快线周期",
+        "min": 2,
+        "max": 30,
+        "description": "MACD的短期EMA周期。标准值为12，代表最近12个交易日的指数移动平均。值越小对价格变化越敏感，产生信号越频繁。一般不需要修改，保持12即可"
+      },
+      "slow_period": {
+        "value": 26,
+        "type": "int",
+        "label": "慢线周期",
+        "min": 10,
+        "max": 60,
+        "description": "MACD的长期EMA周期。标准值为26，代表最近26个交易日的指数移动平均。与快线周期的差值决定了MACD的灵敏度。一般不需要修改，保持26即可"
+      },
+      "signal_period": {
+        "value": 9,
+        "type": "int",
+        "label": "信号线周期",
+        "min": 2,
+        "max": 20,
+        "description": "MACD信号线（DEA线）的EMA周期。标准值为9。信号线是MACD值的移动平均，用于产生金叉/死叉信号。值越小信号越早但假信号越多"
+      }
+    }
+  },
+  {
+    "id": "strat-bollinger",
+    "name": "布林带策略",
+    "class_name": "BollingerStrategy",
+    "description": "价格触及布林带上下轨时产生反向交易信号，适合震荡行情",
+    "category": "震荡策略",
+    "parameters": {
+      "boll_window": {
+        "value": 20,
+        "type": "int",
+        "label": "均线周期",
+        "min": 5,
+        "max": 60,
+        "description": "布林带中轨（移动平均线）的天数。标准值为20。周期越短，布林带越窄，信号越频繁；周期越长，布林带越宽，信号越少但更可靠。例如：10日适合短线，20日标准，30日适合中长线"
+      },
+      "boll_dev": {
+        "value": 2.0,
+        "type": "float",
+        "label": "标准差倍数",
+        "min": 1.0,
+        "max": 3.0,
+        "description": "上下轨距离中轨的标准差倍数。标准值为2.0。倍数越大，通道越宽，信号越少但越极端。例如：1.5倍适合频繁交易（信号多但可靠性低），2.0倍是标准设置，2.5倍适合只捕捉极端行情"
+      }
+    }
+  },
+  {
+    "id": "strat-rsi",
+    "name": "RSI策略",
+    "class_name": "RsiStrategy",
+    "description": "RSI超买超卖产生反向交易信号，适合震荡行情中低买高卖",
+    "category": "震荡策略",
+    "parameters": {
+      "rsi_window": {
+        "value": 14,
+        "type": "int",
+        "label": "RSI周期",
+        "min": 2,
+        "max": 30,
+        "description": "计算RSI指标的天数。标准值为14。周期越短RSI波动越大、信号越频繁，周期越长越平滑。例如：6日RSI非常灵敏（适合短线），14日是标准设置，21日较平滑（适合中长线）"
+      },
+      "rsi_overbought": {
+        "value": 70,
+        "type": "float",
+        "label": "超买阈值",
+        "min": 60,
+        "max": 90,
+        "description": "RSI高于此值视为超买，产生卖出信号。标准值为70。值越低卖出信号越早但可能误判，值越高只在极端超买时才卖出。例如：65适合保守卖出（信号多），70是标准设置，80只在极端超买时才卖出"
+      },
+      "rsi_oversold": {
+        "value": 30,
+        "type": "float",
+        "label": "超卖阈值",
+        "min": 10,
+        "max": 40,
+        "description": "RSI低于此值视为超卖，产生买入信号。标准值为30。值越高买入信号越早但可能抄底过早，值越低只在极端超卖时才买入。例如：35适合保守买入（信号多），30是标准设置，20只在极端超卖时才买入"
+      }
+    }
+  },
+  {
+    "id": "strat-turtle",
+    "name": "海龟交易策略",
+    "class_name": "TurtleStrategy",
+    "description": "经典趋势跟踪策略，突破N日最高价买入、跌破N日最低价卖出",
+    "category": "趋势跟踪",
+    "parameters": {
+      "entry_window": {
+        "value": 20,
+        "type": "int",
+        "label": "入场突破周期",
+        "min": 5,
+        "max": 60,
+        "description": "价格突破最近N日最高价时买入。标准值为20（唐奇安通道）。周期越短入场越早但假突破越多，周期越长入场越晚但更可靠。例如：10日适合短线突破，20日是经典海龟设置，55日适合大波段"
+      },
+      "exit_window": {
+        "value": 10,
+        "type": "int",
+        "label": "出场突破周期",
+        "min": 3,
+        "max": 30,
+        "description": "价格跌破最近N日最低价时卖出。标准值为10。出场周期应小于入场周期，以便在趋势反转时及时退出。例如：入场20配出场10是经典搭配，入场55配出场20适合长线"
+      }
+    }
+  },
+  {
+    "id": "strat-kdj",
+    "name": "KDJ策略",
+    "class_name": "KdjStrategy",
+    "description": "KDJ指标金叉死叉结合超买超卖区域产生交易信号",
+    "category": "震荡策略",
+    "parameters": {
+      "kdj_window": {
+        "value": 9,
+        "type": "int",
+        "label": "KDJ周期",
+        "min": 3,
+        "max": 30,
+        "description": "计算KDJ中RSV（未成熟随机值）的天数。标准值为9。代表用最近9天的价格范围来衡量当前位置。值越小反应越灵敏，值越大越平滑"
+      },
+      "k_smooth": {
+        "value": 3,
+        "type": "int",
+        "label": "K值平滑周期",
+        "min": 1,
+        "max": 10,
+        "description": "对K值进行平滑计算的周期。标准值为3。D值是K值的移动平均，周期越大D线越平滑，金叉死叉信号越少但越可靠"
+      },
+      "d_smooth": {
+        "value": 3,
+        "type": "int",
+        "label": "D值平滑周期",
+        "min": 1,
+        "max": 10,
+        "description": "D值的平滑周期。标准值为3。D值越平滑，金叉死叉信号越少但越可靠。一般保持默认值3即可"
+      }
+    }
+  },
+  {
+    "id": "strat-cci",
+    "name": "CCI策略",
+    "class_name": "CciStrategy",
+    "description": "CCI指标超过±100阈值时产生交易信号，适合捕捉趋势启动",
+    "category": "震荡策略",
+    "parameters": {
+      "cci_window": {
+        "value": 14,
+        "type": "int",
+        "label": "CCI周期",
+        "min": 5,
+        "max": 30,
+        "description": "计算CCI指标的天数。标准值为14。周期越短CCI波动越剧烈、信号越频繁，周期越长越平滑。例如：10日适合短线，14日是标准设置，20日适合中长线"
+      },
+      "cci_overbought": {
+        "value": 100,
+        "type": "float",
+        "label": "超买阈值",
+        "min": 50,
+        "max": 200,
+        "description": "CCI超过此值视为多头启动（买入信号）。标准值为100。值越小信号越频繁但可靠性降低，值越大信号越少但更可靠。例如：80适合激进交易，100是标准设置，150只在强趋势时才触发"
+      },
+      "cci_oversold": {
+        "value": -100,
+        "type": "float",
+        "label": "超卖阈值",
+        "min": -200,
+        "max": -50,
+        "description": "CCI低于此值视为空头启动（卖出信号）。标准值为-100。通常与超买阈值对称。例如：-80适合激进交易，-100是标准设置，-150只在强趋势时才触发"
+      }
+    }
+  },
+  {
+    "id": "strat-triple-ma",
+    "name": "三均线策略",
+    "class_name": "TripleMaStrategy",
+    "description": "短中长三根均线排列判断趋势，多头排列买入、空头排列卖出",
+    "category": "趋势跟踪",
+    "parameters": {
+      "fast_window": {
+        "value": 5,
+        "type": "int",
+        "label": "短周期均线",
+        "min": 2,
+        "max": 20,
+        "description": "最短周期的移动平均线天数。用于捕捉短期趋势变化。例如：5日代表一周均价，10日代表两周均价。常见搭配：5/10/20（短线）、5/20/60（波段）"
+      },
+      "mid_window": {
+        "value": 20,
+        "type": "int",
+        "label": "中周期均线",
+        "min": 5,
+        "max": 40,
+        "description": "中等周期的移动平均线天数。用于确认中期趋势方向。应介于快线和慢线之间。例如：10日代表两周均价，20日代表一个月均价"
+      },
+      "slow_window": {
+        "value": 60,
+        "type": "int",
+        "label": "长周期均线",
+        "min": 10,
+        "max": 120,
+        "description": "最长周期的移动平均线天数。代表长期趋势方向。当短>中>长时为多头排列（买入），短<中<长时为空头排列（卖出）。例如：20日代表月线，60日代表季线，120日代表半年线"
+      }
+    }
+  },
+  {
+    "id": "strat-ema-cross",
+    "name": "EMA交叉策略",
+    "class_name": "EmaCrossStrategy",
+    "description": "指数移动平均线交叉策略，比简单均线反应更灵敏",
+    "category": "趋势跟踪",
+    "parameters": {
+      "fast_window": {
+        "value": 12,
+        "type": "int",
+        "label": "快线周期",
+        "min": 2,
+        "max": 30,
+        "description": "短期EMA的天数。EMA比简单均线更重视近期价格，反应更快。例如：5日EMA适合超短线，12日EMA适合短线，20日EMA适合波段"
+      },
+      "slow_window": {
+        "value": 26,
+        "type": "int",
+        "label": "慢线周期",
+        "min": 10,
+        "max": 60,
+        "description": "长期EMA的天数。与快线形成交叉产生信号。慢线周期应明显大于快线。常见搭配：快5/慢20（短线）、快12/慢26（标准）、快20/慢50（中长线）"
+      }
+    }
+  },
+  {
+    "id": "strat-volume-ma",
+    "name": "成交量均线策略",
+    "class_name": "VolumeMaStrategy",
+    "description": "成交量突破均线配合价格趋势产生信号，量价配合确认趋势",
+    "category": "量价策略",
+    "parameters": {
+      "ma_window": {
+        "value": 20,
+        "type": "int",
+        "label": "价格均线周期",
+        "min": 5,
+        "max": 60,
+        "description": "价格趋势判断的均线天数。放量且价格在均线之上视为多头确认，放量且价格在均线之下视为空头确认。例如：10日适合短线，20日是标准设置，30日适合中长线"
+      },
+      "vol_window": {
+        "value": 20,
+        "type": "int",
+        "label": "成交量均线周期",
+        "min": 5,
+        "max": 60,
+        "description": "计算成交量移动平均的天数。标准值为20。当成交量突破均量1.5倍以上时视为放量。例如：10日适合捕捉短期放量，20日是标准设置，30日适合确认中期量能变化"
+      },
+      "vol_ratio": {
+        "value": 1.5,
+        "type": "float",
+        "label": "放量倍数",
+        "min": 1.0,
+        "max": 3.0,
+        "description": "成交量超过均量的倍数阈值。标准值为1.5（即成交量超过均量50%才算放量）。值越小越容易触发（1.2倍即算放量），值越大要求更明显的放量（2倍才算放量）"
+      }
+    }
+  },
+  {
+    "id": "strat-momentum",
+    "name": "动量策略",
+    "class_name": "MomentumStrategy",
+    "description": "基于价格动量变化产生信号，动量由正转负卖出、由负转正买入",
+    "category": "趋势跟踪",
+    "parameters": {
+      "mom_window": {
+        "value": 10,
+        "type": "int",
+        "label": "动量周期",
+        "min": 3,
+        "max": 30,
+        "description": "计算动量的回看天数。动量=今日收盘价/N日前收盘价-1。周期越短动量波动越大，周期越长越平滑。例如：5日动量适合短线，10日适合波段，20日适合中长线"
+      },
+      "mom_threshold": {
+        "value": 0.03,
+        "type": "float",
+        "label": "动量阈值",
+        "min": 0.01,
+        "max": 0.1,
+        "description": "动量超过此阈值才产生信号。标准值为0.03（3%）。例如：0.02表示涨跌超过2%才算有效动量，0.03表示涨跌超过3%，0.05表示涨跌超过5%。阈值越小信号越频繁，阈值越大只在强趋势时才触发"
+      },
+      "ma_window": {
+        "value": 20,
+        "type": "int",
+        "label": "均线周期",
+        "min": 5,
+        "max": 60,
+        "description": "辅助趋势判断的均线天数。买入信号要求价格同时在均线上方，卖出信号不要求。用于过滤下跌趋势中的假买入信号。例如：10日适合短线，20日是标准设置"
+      }
+    }
+  },
+  {
+    "id": "strat-atr-channel",
+    "name": "ATR通道策略",
+    "class_name": "AtrChannelStrategy",
+    "description": "以均线为中枢、ATR的倍数为上下轨构建通道，突破通道产生信号",
+    "category": "趋势跟踪",
+    "parameters": {
+      "atr_window": {
+        "value": 14,
+        "type": "int",
+        "label": "ATR周期",
+        "min": 5,
+        "max": 30,
+        "description": "计算平均真实波幅（ATR）的天数。ATR衡量价格波动幅度，单位为价格本身。标准值为14。例如：某股票ATR=2.0，表示日均波动约2元"
+      },
+      "atr_mult": {
+        "value": 2.0,
+        "type": "float",
+        "label": "ATR倍数",
+        "min": 1.0,
+        "max": 4.0,
+        "description": "上下轨距离中轨的ATR倍数。倍数越大通道越宽、信号越少。例如：1.5倍通道较窄（信号多但可能被假突破），2.0倍是标准设置，3.0倍通道较宽（只捕捉大趋势）"
+      },
+      "ma_window": {
+        "value": 20,
+        "type": "int",
+        "label": "中轨均线周期",
+        "min": 5,
+        "max": 60,
+        "description": "通道中轨（移动平均线）的天数。代表价格的中枢位置。例如：10日适合短线，20日是标准设置，30日适合中长线"
+      }
+    }
+  },
+  {
+    "id": "strat-dual-thrust",
+    "name": "Dual Thrust策略",
+    "class_name": "DualThrustStrategy",
+    "description": "经典日内突破策略，根据前N日的价格范围计算上下突破阈值",
+    "category": "突破策略",
+    "parameters": {
+      "n_window": {
+        "value": 4,
+        "type": "int",
+        "label": "回看天数",
+        "min": 2,
+        "max": 10,
+        "description": "用前N日的最高价、最低价和收盘价计算突破范围。标准值为4。天数越多突破范围越宽、信号越少。例如：2日适合频繁交易，4日是经典设置，7日适合只捕捉大波动"
+      },
+      "k_up": {
+        "value": 0.5,
+        "type": "float",
+        "label": "上突破系数",
+        "min": 0.1,
+        "max": 1.0,
+        "description": "向上突破的系数，乘以前N日价格范围得到上轨距离开盘价的距离。值越大上轨越高、越难突破。例如：0.3适合容易触发买入，0.5是标准设置，0.7适合只在强势突破时买入"
+      },
+      "k_down": {
+        "value": 0.5,
+        "type": "float",
+        "label": "下突破系数",
+        "min": 0.1,
+        "max": 1.0,
+        "description": "向下突破的系数，乘以前N日价格范围得到下轨距离开盘价的距离。值越大下轨越低、越难突破。通常与上突破系数保持一致。例如：0.3适合容易触发卖出，0.5是标准设置"
+      }
+    }
+  },
+  {
+    "id": "strat-grid",
+    "name": "网格交易策略",
+    "class_name": "GridStrategy",
+    "description": "在价格上下按固定间距挂单，低买高卖赚取差价，适合震荡行情",
+    "category": "震荡策略",
+    "parameters": {
+      "grid_size": {
+        "value": 0.02,
+        "type": "float",
+        "label": "网格间距(比例)",
+        "min": 0.005,
+        "max": 0.1,
+        "description": "相邻两个网格之间的价格间距，以比例表示。例如：0.02表示2%的间距。假设当前股价50元，则每格间距=50×0.02=1元，网格价位为48、49、50、51、52…。间距越小交易越频繁但单次利润低，间距越大交易越少但单次利润高。建议：低价股（<20元）用1%~2%，中价股（20~100元）用1.5%~3%，高价股（>100元）用2%~5%"
+      },
+      "grid_quantity": {
+        "value": 100,
+        "type": "int",
+        "label": "每格交易数量(股)",
+        "min": 100,
+        "max": 10000,
+        "description": "每触及一个网格价位时买入或卖出的股数。A股最小单位为100股（1手）。例如：100股表示每格交易1手，500股表示每格交易5手。每格交易金额=每格数量×当前股价，如股价50元买100股则每格投入5000元。建议单格金额不超过总资金的5%~10%"
+      },
+      "grid_range": {
+        "value": 0.1,
+        "type": "float",
+        "label": "网格范围(比例)",
+        "min": 0.02,
+        "max": 0.3,
+        "description": "网格覆盖的价格范围，以当前价为基准上下各扩展的比例。例如：0.1表示上下各10%。假设当前股价50元，则网格范围从45元到55元，共覆盖10元。范围越大覆盖的价位越多、需要更多资金，但能应对更大的价格波动。建议：震荡股用5%~10%，波动大的股票用10%~20%"
+      }
+    }
+  }
+]

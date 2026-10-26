@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stock_quant_backend
+    restart: unless-stopped
+    ports:
+      - "8700:8000"
+    env_file:
+      - .env
+    environment:
+      # 数据库连接请写在 .env 中（DATABASE_URL=...），不要提交到仓库
+      - STOCK_DATA_URL=http://stock_data:8000
+      - STOCK_TRADE_URL=http://stock_trade:8800
+    volumes:
+      - /root/docker-compose/apps/stockquant/stockquant_data:/app/data
+    networks:
+      - stock_quant_net
+
+networks:
+  stock_quant_net:
+    driver: bridge

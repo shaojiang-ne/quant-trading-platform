@@ -1,0 +1,75 @@
+# 股票筛选系统配置文件
+
+# ==================== 初筛条件 ====================
+screener:
+  # 最小市值（亿元）
+  min_market_cap: 50
+  # 最小日成交额（亿元）
+  min_daily_amount: 1
+  # 排除ST股票
+  exclude_st: true
+  # 排除上市N天内的新股
+  exclude_new_stock_days: 60
+  # 排除指定代码前缀的板块（688=科创板, 30=创业板）
+  exclude_code_prefix: ["688", "30", "920"]
+  # 排除指定行业（黑名单）
+  exclude_industries: ["房地产","住宅开发","建筑装饰","建筑材料","建筑施工","其他建材Ⅲ","其他酒类"]
+  # 限定行业（白名单，空=不限）
+  industries: []
+
+# ==================== 策略配置 ====================
+strategies:
+  # 六脉神剑：放量+MACD金叉+KDJ金叉+RSI适中+站上5日线+5日均量放大
+  # 至少满足4个条件且必须命中至少1个信号条件(放量/MACD金叉/KDJ金叉)
+  six_sword:
+    enabled: true
+    params:
+      min_conditions: 5       # 至少满足N个条件才触发
+      macd_fast: 12           # MACD快线周期
+      macd_slow: 26           # MACD慢线周期
+      macd_signal: 9          # MACD信号线周期
+      kdj_period: 9           # KDJ周期
+      kdj_k_smooth: 3         # KDJ K平滑系数
+      kdj_d_smooth: 3         # KDJ D平滑系数
+      rsi_period: 14          # RSI周期
+      rsi_upper: 70           # RSI上限（高于=超买）
+      volume_ratio: 1.5       # 放量倍数阈值
+  # 四维擒龙：放量+MACD金叉+MACD零轴上方+均线多头+近期新高附近
+  # 至少满足4个条件且必须命中至少1个信号条件(放量/MACD金叉)
+  four_dimension:
+    enabled: true
+    params:
+      min_conditions: 4       # 至少满足N个条件才触发
+      volume_ratio: 2.0       # 放量倍数阈值
+      macd_fast: 12           # MACD快线周期
+      macd_slow: 26           # MACD慢线周期
+      macd_signal: 9          # MACD信号线周期
+      near_high_days: 20      # 近期新高回看天数
+      near_high_pct: 5        # 距新高百分比阈值
+  # RSI+KDJ共振：近期RSI超卖+KDJ低位金叉+当日涨幅达标+放量
+  # 所有条件必须同时满足
+  rsi_kdj:
+    enabled: true
+    params:
+      rsi_period: 6           # RSI周期
+      rsi_upper: 40           # RSI超卖阈值
+      rsi_lookback: 5         # 近N日内RSI曾低于阈值
+      kdj_period: 9           # KDJ周期
+      kdj_k_smooth: 3         # KDJ K平滑系数
+      kdj_d_smooth: 3         # KDJ D平滑系数
+      kdj_j_upper: 50         # KDJ J值上限
+      change_min: 1.0         # 当日涨幅下限(%)
+      change_max: 3.5         # 当日涨幅上限(%)
+
+# ==================== 钉钉通知配置 ====================
+# webhook / secret 请通过环境变量配置（不要写入仓库）：
+#   DINGTALK_WEBHOOK / DINGTALK_SECRET
+#   DINGTALK_TEST_WEBHOOK / DINGTALK_TEST_SECRET
+dingtalk:
+  # 正式机器人（schedule定时任务使用）
+  webhook: ""
+  secret: ""
+dingtalk_test:
+  # 测试机器人（手动执行时使用）
+  webhook: ""
+  secret: ""

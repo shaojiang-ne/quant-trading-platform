@@ -1,0 +1,25 @@
+[Unit]
+Description=Stock Filters - A股智能选股系统
+After=network.target
+
+[Service]
+Type=simple
+User=stock
+Group=stock
+WorkingDirectory=/opt/stock_filters
+Environment=PATH=/opt/stock_filters/venv/bin:/usr/bin:/bin
+Environment=LANG=zh_CN.UTF-8
+Environment=TZ=Asia/Shanghai
+# 钉钉通知（建议通过环境变量配置，不写入 config.yaml）
+# Environment=DINGTALK_WEBHOOK=https://oapi.dingtalk.com/robot/send?access_token=xxx
+# Environment=DINGTALK_SECRET=SECxxx
+# Environment=DINGTALK_TEST_WEBHOOK=https://oapi.dingtalk.com/robot/send?access_token=xxx
+# Environment=DINGTALK_TEST_SECRET=SECxxx
+ExecStart=/opt/stock_filters/venv/bin/python3 main.py --schedule
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

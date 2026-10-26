@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── 全局基础 ────────────────────────────────────────────────────────────── */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  overscroll-behavior: none;
+}
+
+/* ── 安全区域 ────────────────────────────────────────────────────────────── */
+.safe-area-bottom {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+/* ── 100dvh 兼容 ────────────────────────────────────────────────────────── */
+@supports (height: 100dvh) {
+  .h-screen { height: 100dvh; }
+}
+
+/* ── 滚动条隐藏 ──────────────────────────────────────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── 代码块字体 ──────────────────────────────────────────────────────────── */
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', Menlo, monospace;
+}
+
+/* ── 消息列表滚动 ────────────────────────────────────────────────────────── */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}

@@ -1,0 +1,14 @@
+server:
+  host: "0.0.0.0"
+  port: 8800
+  ssl_cert: "cert.pem"
+  ssl_key: "key.pem"
+
+auth:
+  api_key: ""  # 通过环境变量 STOCK_TRADE_API_KEY 设置，不要在此处填写
+
+gateway:
+  type: "xtquant"
+  # QMT 客户端路径（本机路径，不应提交），可用环境变量 QMT_PATH 覆盖
+  qmt_path: ""
+  session_id: 0

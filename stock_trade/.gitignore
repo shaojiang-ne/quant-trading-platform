@@ -1,0 +1,17 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+cert.pem
+key.pem
+.env
+*.log
+.claude/settings.local.json
+# WinSW (Windows service wrapper) - 部署相关，不入库
+*-service.exe
+*-service.xml
+*-service.wrapper.log
+*-service.out.log
+*-service.err.log
+winsw_logs/
+logs/

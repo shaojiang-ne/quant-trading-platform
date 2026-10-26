@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Environment Variables
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# System
+.DS_Store
+Thumbs.db
+
+*.pyc
+
+# WinSW (Windows service wrapper) - 部署相关，不入库
+*-service.exe
+*-service.xml
+*-service.wrapper.log
+*-service.out.log
+*-service.err.log
+winsw_logs/
+logs/

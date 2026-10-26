@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+*.pyo
+.git
+.gitignore
+.env
+.venv
+venv
+*.db
+*.sqlite3
+.claude
+SKILL.md
+start.sh
+start.ps1
+migrate_to_mysql.py
